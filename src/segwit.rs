@@ -57,7 +57,7 @@ pub fn create_bond_script(
 
 		// so now we checked that our pubkey signed two sighashes
 		// altstack: <prev1><outs1><prev2><outs2>
-		
+
 		// pop all four items from altstack
 		.push_opcode(OP_FROMALTSTACK)
 		.push_opcode(OP_FROMALTSTACK)
@@ -66,7 +66,7 @@ pub fn create_bond_script(
 
 		// so the stack is now
 		// <outs2><prev2><outs1><prev1>
-		
+
 		// put prevouts and outputs next to eachother
 		.push_int(2)
 		.push_opcode(OP_ROLL)
@@ -323,7 +323,7 @@ pub fn create_unsigned_reclaim_tx(
 ) -> Result<elements::Transaction, &'static str> {
 	let mut ret = elements::Transaction {
 		version: 2,
-		lock_time: spec.lock_time,
+		lock_time:  elements::LockTime::ZERO,
 		input: vec![elements::TxIn {
 			previous_output: bond_utxo.outpoint,
 			is_pegin: false,
@@ -611,7 +611,7 @@ pub mod burn_covenant {
 				break (pair.public_key(), sig);
 			}
 		};
-		
+
 		// first we just take the major part of the first part.
 		let mut cur = Cursor::new(&buf);
 		// <version><prevouts><sequences><issuances><prevout><script-code><value><sequence>
